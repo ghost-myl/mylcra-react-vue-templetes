@@ -1,0 +1,87 @@
+{
+  "name": "<%= projectName %>",
+  "version": "<%= version %>",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx webpack server --config webpack.dev.js",
+    "build": "npx webpack --config webpack.prod.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    <% if(language=='react') { %>
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^6.2.1",
+    "@babel/preset-react": "^7.14.5",
+    "@types/react": "^17.0.19",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    <% } %>
+    <% if(language=='angular'){%>
+    "angular":"^1.8.2",
+    <% } %>
+    <% if(language=='vue'){%>
+    "vue":"^2.6.0",
+    <% }%>
+    "@babel/preset-typescript": "^7.15.0",
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
+    "@typescript-eslint/parser": "^4.29.3",
+    "antd": "^4.16.13",
+    "autoprefixer": "^10.3.2",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^6.2.0",
+    "css-minimizer-webpack-plugin": "^3.0.2",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-typescript": "^14.0.0",
+    "eslint-plugin-import": "^2.24.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.3.2",
+    <% if(style=='less'){%>
+    "less": "^4.1.1",
+    "less-loader": "^10.0.1",
+    <% } %>
+    <% if(style=='sass'){%>
+    "sass": "^1.38.0",
+    "sass-loader": "^12.1.0",
+    <% } %>
+    "mini-css-extract-plugin": "^2.2.0",
+    "postcss-loader": "^6.1.1",
+    "figlet": "^1.5.2",
+    "postcss-preset-env": "^6.7.0",
+    "style-loader": "^3.2.1",
+    "stylelint": "^13.13.1",
+    "stylelint-config-standard": "^22.0.0",
+    "terser-webpack-plugin": "^5.1.4",
+    "thread-loader": "^3.0.4",
+    <% if(jsType=='ts'){%>
+    "ts-loader": "^9.2.5",
+    "@types/react-dom": "^17.0.11",
+    <% } %>
+    "typescript": "^4.3.5",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^4.0.0",
+    "webpack-merge": "^5.8.0",
+    "chalk": "^4.1.2"
+  },
+  "browserslist": {
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ],
+    "production": [
+      ">0.2%",
+      "not dead"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.2"
+  }
+}

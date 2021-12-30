@@ -1,0 +1,126 @@
+const webpack = require('webpack');
+const { resolve } = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const figlet = require('figlet');
+const chalk = require('chalk');
+
+console.log(
+  chalk.green(
+    '\r\n' +
+      figlet.textSync('myl-cli', {
+        font: 'Ghost',
+        horizontalLayout: 'default',
+        verticalLayout: 'default',
+        width: 80,
+        whitespaceBreak: true,
+      }),
+  ),
+);
+module.exports = {
+  <% if(jsType === 'js'){ %>
+    entry: './src/app/index.jsx',
+  <%}%>
+  <% if(jsType === 'ts'){ %>
+    entry: './src/app/index.tsx',
+  <%}%>
+  output: {
+    filename: 'js/main.js',
+    path: resolve(__dirname, 'dist'),
+    clean: true,
+  },
+
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'src/'),
+    },
+    extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
+    mainFiles: ['index.js', 'index.jsx', 'index.tsx', 'index.ts'],
+  },
+
+  module: {
+    rules: [
+      <% if(jsType === 'js'){ %>
+      {
+        test: /\.(js|jsx)$/,
+        include: resolve(__dirname, 'src'),
+        exclude: /node_modules/,
+        enforce: 'pre',
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                '@babel/preset-env',
+                '@babel/preset-react',
+                '@babel/preset-typescript',
+              ],
+              cacheDirectory: true,
+            },
+          },
+        ],
+      },
+      <%}%>
+      <% if(jsType==='ts'){ %>
+      {
+        test: /\.(ts|tsx)$/,
+        loader: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      <%}%>
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+      <% if(style==='less'){ %>
+      {
+        test: /\.less$/,
+        use: ['style-loader', 'css-loader', 'less-loader'],
+      },
+      <%}%>
+      <% if(style==='sass'){ %>
+      {
+        test: /\.s[ac]ss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
+      <%}%>
+      {
+        exclude: /.(html|less|css|sass|js|jsx|ts|tsx)$/,
+        test: /\.(jpg|jpe|png|gif)$/,
+        loader: 'file-loader',
+        options: {
+          name: 'imgs/[name].[ext]',
+          outputPath: 'other',
+        },
+      },
+      {
+        test: /\.(ect|ttf|svg|woff)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: 'icon/[name].[ext]',
+          },
+        },
+      },
+    ],
+  },
+
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/app/index.html',
+      minify: {
+        removeAttributeQuotes: true,
+        removeComments: true,
+      },
+    }),
+    new webpack.ProgressPlugin({
+      activeModules: false,
+      entries: true,
+      modules: true,
+      modulesCount: 5000,
+      profile: false,
+      dependencies: true,
+      dependenciesCount: 10000,
+      percentBy: 'entries',
+    }),
+  ],
+};
